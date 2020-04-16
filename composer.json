@@ -1,0 +1,13 @@
+{
+
+    "autoload": {
+        "psr-4": {
+            "Sparav\\Customer\\": "src"
+        }
+    },
+    "name": "sparav/customer",
+    "description": "Sparav Customer Api",
+    "type": "MIT",
+    "license": "MIT",
+    "minimum-stability": "stable"
+}
