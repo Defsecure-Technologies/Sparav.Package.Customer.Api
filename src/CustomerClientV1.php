@@ -43,7 +43,7 @@ class CustomerClientV1
     public function findUserByUsername(string $username) {
         $response = Http::timeout(15)
             ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
-            ->get('https://sparavcustomerapiprod.azurewebsites.net/api/v1/user/findbyusername?username=blerim@cazimi.dk');
+            ->get("https://sparavcustomerapiprod.azurewebsites.net/api/v1/user/findbyusername?username={$username}");
         return $response;
     }
 
