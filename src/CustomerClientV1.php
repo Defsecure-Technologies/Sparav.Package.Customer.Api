@@ -47,4 +47,17 @@ class CustomerClientV1
         return $response;
     }
 
+    /**
+     * @param int $user_id
+     * @param string $password
+     * @param $admin_token
+     * @return Response
+     */
+    public function updatePassword(int $user_id, string $password, $admin_token) {
+        $response = Http::timeout(15)
+            ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
+            ->put("https://sparavcustomerapiprod.azurewebsites.net/api/v1/user/updatepassword", ['user_id' => $user_id, 'password' => $password, 'admin_token' => $admin_token]);
+        return $response;
+    }
+
 }
