@@ -24,6 +24,31 @@ class PasswordClientV1
     }
 
     /**
+     * @param string $username
+     * @return Response
+     */
+    public function resetPassword(string $username) {
+        $response = Http::timeout(15)
+            ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
+            ->post("https://sparavcustomerapiprod.azurewebsites.net/api/v1/forgotpassword/resetpassword", ['username' => $username]);
+        return $response;
+    }
+
+    /**
+     * @param string $token
+     * @param string $new_password
+     * @return Response
+     */
+    public function updatePasswordThroughForGotPassword(string $token, string $new_password) {
+        $response = Http::timeout(15)
+            ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
+            ->put("https://sparavcustomerapiprod.azurewebsites.net/api/v1/forgotpassword/updatepassword",
+                ['token' => $token, 'password' => $new_password]);
+        return $response;
+    }
+
+
+    /**
      * Verifies if the given password matches with the users.
      * Will return null, if no match found.
      * @param int $user_id
