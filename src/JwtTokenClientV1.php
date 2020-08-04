@@ -35,4 +35,15 @@ class JwtTokenClientV1
         return $response;
     }
 
+    /**
+     * @param string $token
+     * @return Response
+     */
+    public function token(string $token) {
+        $response = Http::timeout(30)
+            ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
+            ->get("https://sparavcustomerapiprod.azurewebsites.net/api/v1/jwttoken/token/{$token}");
+        return $response;
+    }
+
 }
