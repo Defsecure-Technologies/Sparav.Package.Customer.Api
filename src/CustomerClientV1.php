@@ -32,7 +32,7 @@ class CustomerClientV1
         $createUser = (array) $createUser;
         $response = Http::timeout(15)
             ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
-            ->post('https://sparavcustomerapiprod.azurewebsites.net/api/v1/create', $createUser);
+            ->post('https://sparavcustomerapiprod.azurewebsites.net/api/v1/create?override=1', $createUser);
         return $response;
     }
 
