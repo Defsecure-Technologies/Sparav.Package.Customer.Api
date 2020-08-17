@@ -6,6 +6,7 @@ namespace Sparav\Customer;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Sparav\Customer\Model\CreateUser;
+use Sparav\Customer\Model\UserInfo;
 
 class CustomerClientV1
 {
@@ -33,6 +34,60 @@ class CustomerClientV1
         $response = Http::timeout(15)
             ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
             ->post('https://sparavcustomerapiprod.azurewebsites.net/api/v1/create?override=1', $createUser);
+        return $response;
+    }
+
+    /**
+     * @param UserInfo $userInfo
+     * @return Response
+     */
+    public function createInfo(UserInfo $userInfo)
+    {
+        $userInfo = (array) $userInfo;
+        $response = Http::timeout(15)
+            ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
+            ->post('https://sparavcustomerapiprod.azurewebsites.net/api/v1/createinfo', $userInfo);
+        return $response;
+    }
+
+    /**
+     * @param $customer_id
+     * @return Response
+     */
+    public function getInfo(int $customer_id) {
+        $response = Http::timeout(15)
+            ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
+            ->get("https://sparavcustomerapiprod.azurewebsites.net/api/v1/getinfo/{$customer_id}");
+        return $response;
+    }
+
+    public function updateBasicInfo(int $customer_id, string $firstname, string $lastname, string $email, string $prefix, string $phone) {
+        $response = Http::timeout(15)
+            ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
+            ->put("https://sparavcustomerapiprod.azurewebsites.net/api/v1/updatebasicinfo",
+                [
+                    'customer_id' => $customer_id,
+                    'firstname' => $firstname,
+                    'lastname' => $lastname,
+                    'email' => $email,
+                    'prefix' => $prefix,
+                    'phone' => $phone
+                ]
+            );
+        return $response;
+    }
+
+    public function updateResidenceInfo(int $customer_id, string $address, string $zipcode, string $country) {
+        $response = Http::timeout(15)
+            ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
+            ->put("https://sparavcustomerapiprod.azurewebsites.net/api/v1/updateresidenceinfo",
+                [
+                    'customer_id' => $customer_id,
+                    'address' => $address,
+                    'zipcode' => $zipcode,
+                    'country' => $country
+                ]
+            );
         return $response;
     }
 
