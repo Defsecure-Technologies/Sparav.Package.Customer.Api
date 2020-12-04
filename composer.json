@@ -7,7 +7,7 @@
     },
     "name": "sparav/customer",
     "description": "Sparav Customer Api",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "type": "MIT",
     "license": "MIT",
     "minimum-stability": "stable"
