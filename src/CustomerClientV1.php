@@ -77,6 +77,18 @@ class CustomerClientV1
         return $response;
     }
 
+    public function updateExternCustomerId(int $customer_id, string $extern_customer_id) {
+        $response = Http::timeout(15)
+            ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
+            ->put("https://sparavcustomerapiprod.azurewebsites.net/api/v1/updateexterncustomerid",
+                [
+                    'customer_id' => $customer_id,
+                    'extern_customer_id' => $extern_customer_id,
+                ]
+            );
+        return $response;
+    }
+
     public function updateResidenceInfo(int $customer_id, string $address, string $zipcode, string $country) {
         $response = Http::timeout(15)
             ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
