@@ -57,6 +57,7 @@ class PasswordClientV1
      */
     public function verifyPassword(int $user_id, string $password) {
         $response = Http::timeout(15)
+            ->retry(3, 300)
             ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
             ->post("https://sparavcustomerapiprod.azurewebsites.net/api/v1/user/verifypassword",
                 ['user_id' => $user_id, 'password' => $password]);

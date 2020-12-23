@@ -18,6 +18,7 @@ class JwtTokenClientV1
      */
     public function add(int $customer_id, ?string $expires_at) {
         $response = Http::timeout(30)
+            ->retry(3, 300)
             ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
             ->post("https://sparavcustomerapiprod.azurewebsites.net/api/v1/jwttoken/add", ['customer_id' => $customer_id, 'expires_at' => $expires_at]);
         return $response;
@@ -30,6 +31,7 @@ class JwtTokenClientV1
      */
     public function validate(string $token) {
         $response = Http::timeout(30)
+            ->retry(3, 300)
             ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
             ->get("https://sparavcustomerapiprod.azurewebsites.net/api/v1/jwttoken/validate?token={$token}");
         return $response;
@@ -41,6 +43,7 @@ class JwtTokenClientV1
      */
     public function token(string $token) {
         $response = Http::timeout(30)
+            ->retry(3, 300)
             ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
             ->get("https://sparavcustomerapiprod.azurewebsites.net/api/v1/jwttoken/token/{$token}");
         return $response;

@@ -19,6 +19,7 @@ class CustomerClientV1
     public function login(string $username, string $password)
     {
         $response = Http::timeout(15)
+            ->retry(3, 300)
             ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
             ->post('https://sparavcustomerapiprod.azurewebsites.net/api/v1/login', ['username' => $username, 'password' => $password]);
         return $response;
@@ -32,6 +33,7 @@ class CustomerClientV1
     {
         $createUser = (array) $createUser;
         $response = Http::timeout(15)
+            ->retry(3, 300)
             ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
             ->post('https://sparavcustomerapiprod.azurewebsites.net/api/v1/create?override=1', $createUser);
         return $response;
@@ -45,6 +47,7 @@ class CustomerClientV1
     {
         $userInfo = (array) $userInfo;
         $response = Http::timeout(15)
+            ->retry(3, 300)
             ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
             ->post('https://sparavcustomerapiprod.azurewebsites.net/api/v1/createinfo', $userInfo);
         return $response;
@@ -56,6 +59,7 @@ class CustomerClientV1
      */
     public function getInfo(int $customer_id) {
         $response = Http::timeout(15)
+            ->retry(3, 300)
             ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
             ->get("https://sparavcustomerapiprod.azurewebsites.net/api/v1/getinfo/{$customer_id}");
         return $response;
@@ -63,6 +67,7 @@ class CustomerClientV1
 
     public function updateBasicInfo(int $customer_id, string $firstname, string $lastname, string $email, string $prefix, string $phone) {
         $response = Http::timeout(15)
+            ->retry(3, 300)
             ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
             ->put("https://sparavcustomerapiprod.azurewebsites.net/api/v1/updatebasicinfo",
                 [
@@ -79,6 +84,7 @@ class CustomerClientV1
 
     public function updateExternCustomerId(int $customer_id, string $extern_customer_id) {
         $response = Http::timeout(15)
+            ->retry(3, 300)
             ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
             ->put("https://sparavcustomerapiprod.azurewebsites.net/api/v1/updateexterncustomerid",
                 [
@@ -91,6 +97,7 @@ class CustomerClientV1
 
     public function updateResidenceInfo(int $customer_id, string $address, string $zipcode, string $country) {
         $response = Http::timeout(15)
+            ->retry(3, 300)
             ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
             ->put("https://sparavcustomerapiprod.azurewebsites.net/api/v1/updateresidenceinfo",
                 [
@@ -109,6 +116,7 @@ class CustomerClientV1
      */
     public function findUserByUsername(string $username) {
         $response = Http::timeout(15)
+            ->retry(3, 300)
             ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
             ->get("https://sparavcustomerapiprod.azurewebsites.net/api/v1/user/findbyusername?username={$username}");
         return $response;
@@ -122,6 +130,7 @@ class CustomerClientV1
      */
     public function updatePassword(int $user_id, string $password, $admin_token) {
         $response = Http::timeout(15)
+            ->retry(3, 300)
             ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
             ->put("https://sparavcustomerapiprod.azurewebsites.net/api/v1/user/updatepassword", ['user_id' => $user_id, 'password' => $password, 'admin_token' => $admin_token]);
         return $response;
