@@ -14,14 +14,15 @@ class CustomerClientV1
     /**
      * @param string $username
      * @param string $password
+     * @param int|null $source - CustomerLoginSourceType
      * @return Response
      */
-    public function login(string $username, string $password)
+    public function login(string $username, string $password, ?int $source = null)
     {
         $response = Http::timeout(15)
             ->retry(3, 300)
             ->withBasicAuth(env('SPARAV_CUSTOMER_API_AUTH_USERNAME'), env('SPARAV_CUSTOMER_API_AUTH_PASSWORD'))
-            ->post('https://sparavcustomerapiprod.azurewebsites.net/api/v1/login', ['username' => $username, 'password' => $password]);
+            ->post('https://sparavcustomerapiprod.azurewebsites.net/api/v1/login', ['username' => $username, 'password' => $password, 'source' => $source]);
         return $response;
     }
 
